@@ -34,43 +34,25 @@ function displayProductDatas(product) {
         for (let i = 0; i < product.colors.length; i++) {
             color.innerHTML += `<option value="${product.colors[i]}">${product.colors[i]}</option>`;
         }
-        let productOptions = {
-            id: `${product._id}`,
-            nom: `${product.name}`,
-            couleur: document.querySelector("#colors").value,
-            quantite: parseInt(document.querySelector("#quantity").value),
-            prix: `${product.price}`,
-            image: `${product.imageUrl}`,
-            alt: `${product.altTxt}`
-        }
+
 }
 
-//------------------------------------------------------------------------
-// Quantities 
-//------------------------------------------------------------------------
-
-function pushToCart() {
-    let productQuantity = document.querySelector("#quantity");
-    let addToCartButton = document.querySelector("#addToCart");
-}
-    
 
 //------------------------------------------------------------------------
-// Add  to cart button
+// Add  to cart 
 //------------------------------------------------------------------------
 
- let addToCartButton = document.querySelector("#addToCart");
+let addToCartButton = document.querySelector("#addToCart");
+
+let productQuantity = document.querySelector("#quantity");
 const productColor = document.querySelector("#price").value;
-let product = {
-    "name" : "",
-    "id" : "",
-    "color" : "",
-    "quantity" : ""
-}
-addToCartButton.addEventListener("click", function() {
-});
-
-
+ let product = {
+     "name" : "",
+     "id" : "",
+     "color" : "",
+     "quantity" : ""
+ }
+//Adding product and looking for it in LocalStorage
 function saveInLocalStorage(productOptions) {
     let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
     if (productInLocalStorage === null) {
@@ -78,31 +60,31 @@ function saveInLocalStorage(productOptions) {
         productInLocalStorage.push(productOptions);
         localStorage.setItem("product", JSON.stringify(productInLocalStorage));
     } else {
-        const found = productInLocalStorage.find(element => element.id == productOptions.id && element.couleur == productOptions.couleur);
+        const foundProductInLocalStorage = productInLocalStorage.find(element => element.id == productOptions.id && element.couleur == productOptions.couleur);
         
-        if (found == undefined) {
+        if (foundProductInLocalStorage == undefined) {
             productInLocalStorage.push(productOptions);
             localStorage.setItem("product", JSON.stringify(productInLocalStorage));
 
-//SI PRODUIT AVEC MEME ID ET COULEUR AUGMENTER LA QUANTITE
+//To increase quantity
 
         } else {
-            found.quantite += productOptions.quantite;
+            foundProductInLocalStorage.quantity += productOptions.quantity;
             localStorage.setItem("product", JSON.stringify(productInLocalStorage));
         }
     }   
 }
 
-//ENREGISTRER LES DONNEES DE SELECTION DE PRODUIT EN LOCAL
+//Save product in LocalStorage
 
         addToCartButton.addEventListener('click', (e) => {
 
             let productOptions = {
             id: params.get("id"),
-            nom: `${product.name}`,
-            couleur: document.querySelector("#colors").value,
-            quantite: parseInt(document.querySelector("#quantity").value),
-            prix: `${product.price}`,
+            name: `${product.name}`,
+            color: document.querySelector("#colors").value,
+            quantity: parseInt(document.querySelector("#quantity").value),
+            price: `${product.price}`,
             image: `${product.imageUrl}`,
             alt: `${product.altTxt}`
         }
