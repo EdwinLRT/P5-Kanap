@@ -14,6 +14,10 @@ if (productInLocalStorage == null || productInLocalStorage.length == 0) {
     document.querySelector("h1").innerHTML = `Votre panier est vide`
     
 }
+//Price multiplicator for each item
+
+
+
 
 //load LocalStorage in cart
 
@@ -22,12 +26,12 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
      `<article class="cart__item" data-id="${productInLocalStorage[i].id}">
         <article class="cart__item" data-id="${productInLocalStorage[i].id}">
             <div class="cart__item__img">
-                 <img src="xxxxxxxxxx" alt="xxxxxxxxxx">
+                 <img src="${productInLocalStorage[i].img}" alt="${productInLocalStorage[i].altTxt}">
             </div>
             <div class="cart__item__content">
                 <div class="cart__item__content__titlePrice">
-                     <h2>xxxxxxxxxx</h2>
-                     <p>xxxxxxxxxx * xxxxxxxxxx €</p>
+                     <h2>${productInLocalStorage[i].name}</h2>
+                     <p>${productInLocalStorage[i].price * productInLocalStorage[i].quantity}€</p>
                 </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
@@ -42,5 +46,14 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
             </div>
         </article>
     </article>`;
+
+    
+    let totalPrice = [];
+    let totalQuantity = [];
+    totalPrice.push(parseInt(productInLocalStorage[i].price));
+    totalQuantity.push(parseInt(productInLocalStorage[i].quantity));
+    console.log(totalPrice)
+    console.log(totalQuantity)
+
 }
 

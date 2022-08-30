@@ -13,6 +13,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 //------------------------------------------------------------------------  
 //Get product informations
 //------------------------------------------------------------------------
+
 function displayProductDatas(product) {
     // Get product content via productId
         // Image
@@ -34,6 +35,28 @@ function displayProductDatas(product) {
         for (let i = 0; i < product.colors.length; i++) {
             color.innerHTML += `<option value="${product.colors[i]}">${product.colors[i]}</option>`;
         }
+
+        //Save product in LocalStorage
+
+        addToCartButton.addEventListener('click', (e) => {
+            if (document.querySelector("#quantity").value == 0 || document.querySelector("#colors").value == '' ) {
+                alert("La couleur et/ou la quantitée séléctionnée est incorrecte")
+            }
+            else {
+
+            let productOptions = {
+                id: productId,
+                name: document.querySelector("#title").textContent,
+                img : product.imageUrl,
+                altTxt: product.altTxt,
+                color: document.querySelector("#colors").value,
+                quantity: parseInt(document.querySelector("#quantity").value),
+                price : parseInt(document.querySelector("#price").textContent)
+                }
+        saveInLocalStorage(productOptions);
+    }
+    })
+        
 
 }
 
@@ -67,20 +90,6 @@ function saveInLocalStorage(productOptions) {
     }   
 }
 
-//Save product in LocalStorage
 
-        addToCartButton.addEventListener('click', (e) => {
-            if (document.querySelector("#quantity").value == 0 || document.querySelector("#colors").value == '' ) {
-                alert("La couleur et/ou la quantitée séléctionnée est incorrecte")
-            }
-            else {
-                let productOptions = {
-                id: params.get("id"),
-                color: document.querySelector("#colors").value,
-                quantity: parseInt(document.querySelector("#quantity").value),
-                }
-        saveInLocalStorage(productOptions);
-    }
-    })
 ;
 
