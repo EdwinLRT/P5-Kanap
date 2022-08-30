@@ -6,9 +6,7 @@ fetch("http://localhost:3000/api/products")
             return res.json();
     }})
 
-//Array to display LocalStorage 
-const cart =[]
-let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+let productInLocalStorage = JSON.parse(localStorage.getItem("productOptions"));
 
 //Empty cart
 if (productInLocalStorage == null || productInLocalStorage.length == 0) {
@@ -17,37 +15,32 @@ if (productInLocalStorage == null || productInLocalStorage.length == 0) {
     
 }
 
-
 //load LocalStorage in cart
-function getItemsFromLocalStorage(params) {
-    for (let i = 0; i < localStorage.length; i++){
-        let key = localStorage.key(i);
-        let value = localStorage.getItem(key);
-        console.log(key, value);
-        let createProductInCart = document.querySelector('#cart__items')
-            createProductInCart.innerHTML = `<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+
+for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
+    document.querySelector("#cart__items").innerHTML +=    
+     `<article class="cart__item" data-id="${productInLocalStorage[i].id}">
+        <article class="cart__item" data-id="${productInLocalStorage[i].id}">
             <div class="cart__item__img">
-            <img src="../images/product01.jpg" alt="Photographie d'un canapé">
+                 <img src="xxxxxxxxxx" alt="xxxxxxxxxx">
             </div>
             <div class="cart__item__content">
-            <div class="cart__item__content__description">
-                <h2>Nom du produit</h2>
-                <p>Vert</p>
-                <p>42,00 €</p>
-            </div>
+                <div class="cart__item__content__titlePrice">
+                     <h2>xxxxxxxxxx</h2>
+                     <p>xxxxxxxxxx * xxxxxxxxxx €</p>
+                </div>
             <div class="cart__item__content__settings">
                 <div class="cart__item__content__settings__quantity">
-                <p>Qté : </p>
-                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+                    <p>Couleur : ${productInLocalStorage[i].color}</p>
+                    <p>Qté : </p>
+                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" canapeId="${productInLocalStorage[i].id}" canapeColor="${productInLocalStorage[i].color}" value="${productInLocalStorage[i].quantity}">
                 </div>
                 <div class="cart__item__content__settings__delete">
-                <p class="deleteItem">Supprimer</p>
+                     <p class="deleteItem" canapeId="${productInLocalStorage[i].id}" canapeColor="${productInLocalStorage[i].color}">Supprimer</p>
                 </div>
             </div>
             </div>
-            </article> 
-            `
-    }
+        </article>
+    </article>`;
 }
-getItemsFromLocalStorage()
 
