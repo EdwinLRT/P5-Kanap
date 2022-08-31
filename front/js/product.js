@@ -15,6 +15,7 @@ fetch(`http://localhost:3000/api/products/${productId}`)
 //------------------------------------------------------------------------
 
 function displayProductDatas(product) {
+    //Changer parametre produit
     // Get product content via productId
         // Image
         const productImage = document.createElement('img');
@@ -89,7 +90,5 @@ function saveInLocalStorage(productOptions) {
         }
     }   
 }
-
-
 ;
 
