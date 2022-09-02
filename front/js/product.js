@@ -54,7 +54,7 @@ function displayProductDatas(product) {
                 quantity: parseInt(document.querySelector("#quantity").value),
                 price : parseInt(document.querySelector("#price").textContent)
                 }
-        saveInLocalStorage(productOptions);
+        addToCart(productOptions);
     }
     })
         
@@ -69,24 +69,24 @@ function displayProductDatas(product) {
 let addToCartButton = document.querySelector("#addToCart");
 
 //Adding product and looking for it in LocalStorage
-function saveInLocalStorage(productOptions) {
-    let productInLocalStorage = JSON.parse(localStorage.getItem("productOptions"));
+function addToCart(productOptions) {
+    let productInLocalStorage = JSON.parse(localStorage.getItem("cart"));
     if (productInLocalStorage === null) {
-        productInLocalStorage= [];
+        productInLocalStorage = [];
         productInLocalStorage.push(productOptions);
-        localStorage.setItem("productOptions", JSON.stringify(productInLocalStorage));
+        localStorage.setItem("cart", JSON.stringify(productInLocalStorage));
     } else {
         const foundProductInLocalStorage = productInLocalStorage.find(element => element.id == productOptions.id && element.color == productOptions.color);
         
         if (foundProductInLocalStorage == undefined) {
             productInLocalStorage.push(productOptions);
-            localStorage.setItem("productOptions", JSON.stringify(productInLocalStorage));
+            localStorage.setItem("cart", JSON.stringify(productInLocalStorage));
 
 //To increase quantity
 
         } else {
             foundProductInLocalStorage.quantity += productOptions.quantity;
-            localStorage.setItem("productOptions", JSON.stringify(productInLocalStorage));
+            localStorage.setItem("cart", JSON.stringify(productInLocalStorage));
         }
     }   
 }
