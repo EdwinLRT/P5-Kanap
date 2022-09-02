@@ -6,7 +6,7 @@ fetch("http://localhost:3000/api/products")
             return res.json();
     }})
 
-let productInLocalStorage = JSON.parse(localStorage.getItem("productOptions"));
+let productInLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
 
 // -----------
@@ -45,7 +45,7 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
           <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value=${productInLocalStorage[i].quantity}>
         </div>
         <div class="cart__item__content__settings__delete">
-          <p class="deleteItem" productId="${productInLocalStorage[i].id}" productColor="${productInLocalStorage[i].color}">Supprimer</p>
+          <p class="deleteItem" data-productId="${productInLocalStorage[i].id}" data-productColor="${productInLocalStorage[i].color}">Supprimer</p>
         </div>
       </div>
     </div>
@@ -56,16 +56,14 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
     totalPriceArray.push(totalPriceCalculation);
     totalQuantityArray.push(parseInt(productInLocalStorage[i].quantity));
     let totalPrice=0
-
-// Remove item from cart
-// let removeProduct = document.getElementsByClassName("deleteItem");
-//     removeProduct.addEventListener('click', e => 
-//     console.log("click")
-//     )
+ 
+    // to delete product in cart 
+    let deleteButton = 
 
 }
 
 // Total Price
+//fonction
 let totalPrice=0
 for (let i = 0; i < totalPriceArray.length; i++) {
     totalPrice += totalPriceArray[i];
@@ -73,6 +71,7 @@ for (let i = 0; i < totalPriceArray.length; i++) {
 document.querySelector("#totalPrice").textContent = totalPrice;
 
 // Total Quantity
+//fonction
 let totalQuantity=0
 for (let i = 0; i < totalQuantityArray.length; i++) {
     totalQuantity += totalQuantityArray[i];
