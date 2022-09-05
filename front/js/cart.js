@@ -109,16 +109,11 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
                     let colorToDelete = productInLocalStorage[i].color
                     deleteButton.addEventListener('click', (e) => {
 
-            // filtrer l'élément cliqué par le bouton supprimer
+            // filter local storage to delete the element and save the remaining items
             productInLocalStorage = productInLocalStorage.filter( elt => elt.id !== idToDelete || elt.color !== colorToDelete);
-
-            // envoyer les nouvelles données dans le localStorage
             localStorage.setItem('cart', JSON.stringify(productInLocalStorage));               
-
-            // avertir de la suppression et recharger la page
             alert('Votre article a été supprimé.');
-            
-            //Refresh rapide de la page
+            // reload the content
             location.reload();
                     })
 
