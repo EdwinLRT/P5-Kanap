@@ -89,11 +89,10 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
                     cartItemContentSettingsQuantity.appendChild(productQuantity)
                     productQuantity.value = productInLocalStorage[i].quantity
                     productQuantity.className = 'itemQuantity'
-                    productQuantity.setAttribute('Type', 'Number')
-                    productQuantity.setAttribute("type", "number");
-                    productQuantity.setAttribute("min", "1");
-                    productQuantity.setAttribute("max", "100");
-                    productQuantity.setAttribute("name", "itemQuantity");
+                    productQuantity.setAttribute("type", "number")
+                    productQuantity.setAttribute("min", "1")
+                    productQuantity.setAttribute("max", "100")
+                    productQuantity.setAttribute("name", "itemQuantity")
                 
                 // create div for delete option 
                 let cartItemContentSettingsDelete= document.createElement('div')
@@ -117,26 +116,7 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
             location.reload();
                     })
 
- 
-    // // to delete product in cart 
-    // let deleteButtonSection = document.querySelector('.cart__item__content__settings__delete')
-    // let deleteButton = document.createElement('p')
-    //     deleteButton.innerHTML = "Supprimer "
-    // let deleteId = productInLocalStorage[i].id;
-    // let deleteColor = productInLocalStorage[i].color;
-
-    // deleteButtonSection.appendChild(deleteButton)
-    //  deleteButton.addEventListener("click",()=> {
-    //      console.log("click")
- 
-    //      console.log(deleteId)
-    //      console.log(deleteColor)
-    //      productInLocalStorage = productInLocalStorage.filter( product => product.id !== deleteId || product.color !== deleteColor);
-    //      localStorage.setItem('cart', JSON.stringify(productInLocalStorage));
-    //      alert("L'article a bien été supprimé de votre panier." )
-    //      location.reload();
-    //  })
-
+   
     // Total price and quantity calculation
 
      let totalPriceCalculation = parseInt(productInLocalStorage[i].price) * parseInt(productInLocalStorage[i].quantity);
@@ -148,32 +128,101 @@ for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
 
 
 // Total Price
-//fonction
-let totalPrice=0
-for (let i = 0; i < totalPriceArray.length; i++) {
-    totalPrice += totalPriceArray[i];
+function totalPriceCalculation() {
+    let totalPrice=0
+    for (let i = 0; i < totalPriceArray.length; i++) {
+        totalPrice += totalPriceArray[i];
+    }
+    document.querySelector("#totalPrice").textContent = totalPrice;
 }
-document.querySelector("#totalPrice").textContent = totalPrice;
+totalPriceCalculation()
+
+
 
 // Total Quantity
-//fonction
-let totalQuantity=0
-for (let i = 0; i < totalQuantityArray.length; i++) {
-    totalQuantity += totalQuantityArray[i];
+function totalQuantityCalculation(params) {
+    let totalQuantity=0
+    for (let i = 0; i < totalQuantityArray.length; i++) {
+        totalQuantity += totalQuantityArray[i];
+    }
+    document.querySelector("#totalQuantity").textContent = totalQuantity;
 }
-document.querySelector("#totalQuantity").textContent = totalQuantity;
+totalQuantityCalculation()
 
 
 
-// Delete produt from cart
+// Quantity modifications 
 
 
 
+function modifyQtt() {
+    let quantityToModify = document.querySelectorAll(".itemQuantity");
+
+    for (let k= 0; k < quantityToModify.length; k++){
+        quantityToModify[k].addEventListener("change" , (event) => {
+            event.preventDefault();
+
+            //Select id and color 
+            let currentQuantity = productInLocalStorage[k].quantity;
+            let QuantityRequested = quantityToModify[k].valueAsNumber;
+            
+            const resultFind = productInLocalStorage.find((el) => el.QuantityRequested !== currentQuantity);
+
+            resultFind.quantity = QuantityRequested;
+            productInLocalStorage[k].quantity = resultFind.quantity;
+
+            //Store new values
+            localStorage.setItem("cart", JSON.stringify(productInLocalStorage));
+            location.reload();
+        })
+    }
+}
+modifyQtt();
 
 
 // -----------
 // Form
 //------------
+
+let form = {
+    form.firstName = document.getElementById('firstname'),
+    form.lastName = document.getElementById('lastname'),
+    form.adress = document.getElementById('adress'),
+    form.city = document.getElementById('city'),
+    form.email = document.getElementById('email')
+}
+
+//check if field is empty or not
+function isNotEmpty(value) {
+    if (value == null || value == undefined) return false
+    else (return (value.length>0))
+    
+}
+// used for names / city / adress
+function isLongEnough(char) {
+    let regexChar = new RegExp("^[a-zA-Z ,.'-]+$");;
+    return regexChar.test(String(char));
+}
+//used for email only
+function isEmail(email) {
+    let regexEmail = new RegExp(/^([w-.]+)@((?:[w]+.)+)([a-zA-Z]{2,4})/i);
+    return regexEmail.test(String(email).toLowerCase());
+   }
+
+
+//Lastname
+
+
+//Adress
+
+
+//City
+
+
+//Email
+
+
+
 
 // let regexLastName = /^[a-z ,.'-]{0,35}$/i
 
