@@ -48,11 +48,11 @@ function displayProductDatas(product) {
             let productOptions = {
                 id: productId,
                 name: document.querySelector("#title").textContent,
-                img : product.imageUrl,
+                img: product.imageUrl,
                 altTxt: product.altTxt,
                 color: document.querySelector("#colors").value,
                 quantity: parseInt(document.querySelector("#quantity").value),
-                price : parseInt(document.querySelector("#price").textContent)
+                price: parseInt(document.querySelector("#price").textContent)
                 }
         addToCart(productOptions);
     }

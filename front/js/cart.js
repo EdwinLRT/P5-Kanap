@@ -184,46 +184,173 @@ modifyQtt();
 // Form
 //------------
 
-let form = {
-    form.firstName = document.getElementById('firstname'),
-    form.lastName = document.getElementById('lastname'),
-    form.adress = document.getElementById('adress'),
-    form.city = document.getElementById('city'),
-    form.email = document.getElementById('email')
-}
+
 
 //check if field is empty or not
-function isNotEmpty(value) {
-    if (value == null || value == undefined) return false
-    else (return (value.length>0))
+// function isNotEmpty(value) {
+//     if (value == null || value == undefined) return false;
+//     else (
+//         return (value.length>0)
+//         );
     
-}
+// }
 // used for names / city / adress
-function isLongEnough(char) {
-    let regexChar = new RegExp("^[a-zA-Z ,.'-]+$");;
-    return regexChar.test(String(char));
-}
+// function isLongEnough(char) {
+//     let regexChar = new RegExp("^[a-zA-Z ,.'-]+$");
+//     return regexChar.test(String(char));
+// }
 //used for email only
-function isEmail(email) {
-    let regexEmail = new RegExp(/^([w-.]+)@((?:[w]+.)+)([a-zA-Z]{2,4})/i);
-    return regexEmail.test(String(email).toLowerCase());
-   }
+// function isEmail(email) {
+//     let regexEmail = new RegExp(/^([w-.]+)@((?:[w]+.)+)([a-zA-Z]{2,4})/i);
+//     return regexEmail.test(String(email).toLowerCase());
+//    }
+
+const regexEmail = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$");
+const regexStandard = new RegExp("^[a-zA-Z ,.'-]{3,20}$");
+const regexAddress = new RegExp("^[0-9]{1,5}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+
+// check if cart is empty
+function isCartEmpty() {
+    if (cart.length === 0) {
+      alert(
+        "Votre panier ne contient aucun article"
+      );
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+function getForm() {
 
 
-//Lastname
+        let form = document.querySelector(".cart__order__form")
+        form.firstName.addEventListener('change', function() {
+            isValidFirstName(this)
+            console.log('something happened')
+        })
+        form.lastName.addEventListener('change', function() {
+            isValidLastName(this)
+        })
+        form.address.addEventListener('change', function() {
+            isValidAddress(this)
+        })
+        form.city.addEventListener('change', function() {
+            isValidCity(this)
+        })
+        form.email.addEventListener('change', function() {
+            isValidEmail(this)
+        })
 
 
-//Adress
+
+        //Firstname validation
+        const isValidFirstName = function(inputFirstName) {
+            let firstNameErrorMsg = inputFirstName.nextElementSibling;
+    
+            if (regexStandard.test(inputFirstName.value)) {
+                firstNameErrorMsg.innerHTML = '';
+            } else {
+                firstNameErrorMsg.innerHTML = 'Veuillez renseigner votre prénom.';
+            }
+        };
+    
+        //Lastname validation
+        const isValidLastName = function(inputLastName) {
+            let lastNameErrorMsg = inputLastName.nextElementSibling;
+    
+            if (regexStandard.test(inputLastName.value)) {
+                lastNameErrorMsg.innerHTML = '';
+            } else {
+                lastNameErrorMsg.innerHTML = 'Veuillez renseigner votre nom.';
+            }
+        };
+    
+        //Address validation
+        const isValidAddress = function(inputAddress) {
+            let addressErrorMsg = inputAddress.nextElementSibling;
+    
+            if (regexAddress.test(inputAddress.value)) {
+                addressErrorMsg.innerHTML = '';
+            } else {
+                addressErrorMsg.innerHTML = 'Veuillez renseigner votre adresse.';
+            }
+        };
+    
+        //city validation
+        const isValidCity = function(inputCity) {
+            let cityErrorMsg = inputCity.nextElementSibling;
+    
+            if (regexStandard.test(inputCity.value)) {
+                cityErrorMsg.innerHTML = '';
+            } else {
+                cityErrorMsg.innerHTML = 'Veuillez renseigner votre ville.';
+            }
+        };
+    
+        //email validation
+        const isValidEmail = function(inputEmail) {
+            let emailErrorMsg = inputEmail.nextElementSibling;
+    
+            if (regexEmail.test(inputEmail.value)) {
+                emailErrorMsg.innerHTML = '';
+            } else {
+                emailErrorMsg.innerHTML = 'Veuillez renseigner votre email.';
+            }
+        };
+}
 
 
-//City
-
-
-//Email
 
 
 
+getForm()
 
-// let regexLastName = /^[a-z ,.'-]{0,35}$/i
+function sendForm(){
 
-// <input type="text" pattern="[0-9]{,3}" />
+    //let orderButton = document.querySelector('#order')
+    //orderButton.addEventListener('click', (e) => {
+
+        const orderCustomerInformations = {
+
+            firstName: "Edwin",//document.getElementById('firstname').value,
+            lastName:"Edwin", //document.getElementById('lastname').value,
+            adress: "Edwin",//document.getElementById('adress').value,
+            city: "Edwin",//document.getElementById('city').value,
+            email: "laurent.edwin@outlook.com"//document.getElementById('email').value
+        }
+        console.log(orderCustomerInformations)
+
+
+
+        // let orderArray = []
+        // for (let i = 0; i < productInLocalStorage.length; i++) {
+        //     orderArray.push(productInLocalStorage[i])
+        // }
+
+        // //order number based on time
+        // const d = new Date();
+        // let ms = d.valueOf();
+        // console.log(ms)
+        // const firstNameToShorten = document.getElementById('firstname').value;
+        // const firstNameShortened = firstNameToShorten.slice(0, 3);
+        // const lastNameToShorten = document.getElementById('lastname').value;
+        // const lastNameShortened = lastNameToShorten.slice(0, 3);
+
+        //let orderNumber = firstNameShortened+lastNameShortened+ms
+
+        let productInCart = productInLocalStorage //JSON.stringify(productInLocalStorage)
+        let customerInformations = orderCustomerInformations
+        const orderData = [ 
+            customerInformations,
+            productInCart
+        ]
+          
+
+        localStorage.setItem('order', JSON.stringify(orderData))
+
+
+    }//)
+//}
+sendForm()
+
