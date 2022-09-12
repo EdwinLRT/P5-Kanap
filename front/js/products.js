@@ -1,4 +1,6 @@
+//-----
 //Call API to get product list
+//-----
 fetch("http://localhost:3000/api/products")
     // if result is ok - turn into Json
     .then(function(res){
@@ -11,10 +13,12 @@ fetch("http://localhost:3000/api/products")
         displayProducts(value)
     });
 
+//-----
 //display product function
+//-----
 function displayProducts(products) {
     let productDisplayZone = document.querySelector("#items");
-
+    // display each product from API in a card
     for (let product of products) {
             productDisplayZone.innerHTML += `<a href="./product.html?id=${product._id}"> 
             <article>

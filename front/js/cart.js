@@ -17,8 +17,10 @@ let productInLocalStorage = JSON.parse(localStorage.getItem("cart"));
 // check if cart is empty
 function isCartEmpty() {
     if (productInLocalStorage == null || productInLocalStorage.length == 0) {
-        alert('Votre panier est vide') 
+        // alert('Votre panier est vide') 
         document.querySelector("h1").innerHTML = `Votre panier est vide`;
+        //Hide form if cart is empty
+        document.querySelector("#cartAndFormContainer > section > div.cart__order > form").innerHTML =('')
       return true;
     } else {
       return false;
@@ -174,10 +176,10 @@ let totalQuantityArray = [];
     // Quantity modifications 
 
     function modifyQtt() {
-        let quantityToModify = document.querySelectorAll(".itemQuantity");
+        let itemQuantity = document.querySelectorAll(".itemQuantity");
 
-        for (let k= 0; k < quantityToModify.length; k++){
-            quantityToModify[k].addEventListener("change" , (event) => {
+        for (let k= 0; k < itemQuantity.length; k++){
+            itemQuantity[k].addEventListener("change" , (event) => {
                 event.preventDefault();
 
                 //Select id and color 
@@ -186,8 +188,6 @@ let totalQuantityArray = [];
                 
                 const resultFind = productInLocalStorage.find((el) => el.QuantityRequested !== currentQuantity);
                 
-
-
                 resultFind.quantity = QuantityRequested;
                 productInLocalStorage[k].quantity = resultFind.quantity;
 
@@ -198,6 +198,18 @@ let totalQuantityArray = [];
         }
     }
     modifyQtt();
+
+//     //  mise à jour dans le cart [] de la quantité de l'Item
+// function updateItemsQuantity(newQuantity, color, _id) {
+//     const itemToUpdate = cart.find(
+//       (item) => (item.id === _id) & (item.color === color)
+//     );
+//     itemToUpdate.quantity = Number(newQuantity);
+//     calcTotalArticle();
+//     calcTotalPrice();
+//     updateDataToLocalStorage(itemToUpdate);
+//     displayH1AndTitle();
+//   }
 
 // -----------
 // Form Verification 
@@ -293,16 +305,17 @@ let totalQuantityArray = [];
     function formVerification() {
         if (
             !isCartEmpty() ||
-            !standardStringVerif(form.firstName) ||
-            !standardStringVerif(form.lastName) ||
+            !firstNameVerif(form.firstName) ||
+            !lastNameVerif(form.lastName) ||
             !addressVerif(form.address) || 
-            !standardStringVerif(form.city) || 
+            !cityVerif(form.city) || 
             !emailVerif(form.email)
         ) {
-            console.log('Form verification non ok  ')
+            alert('Le formulaire n\'est pas complet et/ou n\'est pas correct.')
         } else {
             console.log('Form verification ok ')
-
+            orderValidation()
+            return true
         }
         
     }
@@ -314,12 +327,7 @@ let totalQuantityArray = [];
     order.addEventListener('click', (event) => {
     event.preventDefault();
     formVerification()
-    console.log('order button ok ')
-    if (formVerification === true) {
-        orderValidation()
-    }else{
-        return
-    }});
+    })
     
 
     function orderValidation() {
