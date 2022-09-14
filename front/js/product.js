@@ -52,7 +52,7 @@ function displayProductDatas(product) {
                 altTxt: product.altTxt,
                 color: document.querySelector("#colors").value,
                 quantity: parseInt(document.querySelector("#quantity").value),
-                price: parseInt(document.querySelector("#price").textContent)
+                //price: parseInt(document.querySelector("#price").textContent)
                 }
         addToCart(productOptions);
     }
