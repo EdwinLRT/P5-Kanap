@@ -11,6 +11,9 @@ let productInLocalStorage = JSON.parse(localStorage.getItem("cart"));
 // -----------
 // Cart
 //------------
+//creating array for cart totals
+let totalPriceArray = [];
+let totalQuantityArray = [];
 
 
 // check if cart is empty
@@ -27,144 +30,152 @@ function isCartEmpty() {
   }
   isCartEmpty()
 
-
-
 // -----------
 // Display items in cart from localStorage
 //------------
 
-//creating array for cart totals
-let totalPriceArray = [];
-let totalQuantityArray = [];
+    // --
+    //Create items in cart
+    // --
 
+    for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
+        //create article and section
+        let productArticle = document.createElement('article')
+        document.querySelector("#cart__items").appendChild(productArticle)
+        productArticle.className = "cart__item";
+        productArticle.setAttribute("data-id", productInLocalStorage[i].id)
 
-        // --
-        //Create items in cart
-        // --
+            // create and diplay product image
+            let productDivImage = document.createElement('div')
+            productArticle.appendChild(productDivImage)
+            productDivImage.className = 'cart__item__img'
+            let productImg = document.createElement('img')
+            productDivImage.appendChild(productImg)
+            productImg.src = productInLocalStorage[i].img
 
-        for (i = 0 ; i < productInLocalStorage.length ; i += 1) {
-            //create article and section
-            let productArticle = document.createElement('article')
-            document.querySelector("#cart__items").appendChild(productArticle)
-            productArticle.className = "cart__item";
-            productArticle.setAttribute("data-id", productInLocalStorage[i].id)
+        //Create div for cart item content 
+        let cartItemContent = document.createElement('div')
+        productArticle.appendChild(cartItemContent)
+        cartItemContent.className = 'cart__item__content'
+            
+            // create div for cart item description
+            let cartItemContentDescription = document.createElement('div')
+            cartItemContent.appendChild(cartItemContentDescription)
+            cartItemContentDescription.className = 'cart__item__content__description'
 
-                // create and diplay product image
-                let productDivImage = document.createElement('div')
-                productArticle.appendChild(productDivImage)
-                productDivImage.className = 'cart__item__img'
-                let productImg = document.createElement('img')
-                productDivImage.appendChild(productImg)
-                productImg.src = productInLocalStorage[i].img
+                //H2 
+                let productTitle = document.createElement('h2')
+                cartItemContentDescription.appendChild(productTitle)
+                productTitle.innerHTML = productInLocalStorage[i].name
 
-            //Create div for cart item content 
-            let cartItemContent = document.createElement('div')
-            productArticle.appendChild(cartItemContent)
-            cartItemContent.className = 'cart__item__content'
-                
-                // create div for cart item description
-                let cartItemContentDescription = document.createElement('div')
-                cartItemContent.appendChild(cartItemContentDescription)
-                cartItemContentDescription.className = 'cart__item__content__description'
+                // Color
+                let productColor = document.createElement('p')
+                cartItemContentDescription.appendChild(productColor)
+                productColor.innerHTML = productInLocalStorage[i].color
 
-                    //H2 
-                    let productTitle = document.createElement('h2')
-                    cartItemContentDescription.appendChild(productTitle)
-                    productTitle.innerHTML = productInLocalStorage[i].name
-
-                    // Color
-                    let productColor = document.createElement('p')
-                    cartItemContentDescription.appendChild(productColor)
-                    productColor.innerHTML = productInLocalStorage[i].color
-
-                    //Price
+                //Price
+                var productPricePerUnit = "";
+                fetch("http://localhost:3000/api/products/" + productInLocalStorage[i].id)
+                .then(response => response.json())
+                .then(async function (resultAPI) {
+                    productUnit = await resultAPI;
                     let productPrice = document.createElement('p')
                     cartItemContentDescription.appendChild(productPrice)
-                    productPrice.innerHTML = product.price + "€"
+                    productPrice.textContent = "Prix : " + productUnit.price + " €/Unité";
+                })
+                .catch(error => alert("Erreur : " + error));
 
 
-        // --
-        //Quantity and Delete Options
-        // --
+    // --
+    //Quantity and Delete Options
+    // --
 
-                //Create div for Quantity and Remove from cart options 
-                let cartItemContentSettings = document.createElement('div')
-                cartItemContent.appendChild(cartItemContentSettings)
-                cartItemContentSettings.className = 'cart__item__content__settings'
+            //Create div for Quantity and Remove from cart options 
+            let cartItemContentSettings = document.createElement('div')
+            cartItemContent.appendChild(cartItemContentSettings)
+            cartItemContentSettings.className = 'cart__item__content__settings'
 
-                    // Create Div for quantity
-                    let cartItemContentSettingsQuantity= document.createElement('div')
-                    cartItemContentSettings.appendChild(cartItemContentSettingsQuantity)
-                    cartItemContentSettingsQuantity.className = 'cart__item__content__settings__quantity'
-                    
-                        // Text before input
-                        let productQtyText = document.createElement('p')
-                        cartItemContentSettingsQuantity.appendChild(productQtyText)
-                        productQtyText.innerHTML = 'Qté : '
+                // Create Div for quantity
+                let cartItemContentSettingsQuantity= document.createElement('div')
+                cartItemContentSettings.appendChild(cartItemContentSettingsQuantity)
+                cartItemContentSettingsQuantity.className = 'cart__item__content__settings__quantity'
+                
+                    // Text before input
+                    let productQtyText = document.createElement('p')
+                    cartItemContentSettingsQuantity.appendChild(productQtyText)
+                    productQtyText.innerHTML = 'Qté : '
 
-                        //Quantity
-                        let productQuantity = document.createElement('input')
-                        cartItemContentSettingsQuantity.appendChild(productQuantity)
-                        productQuantity.value = productInLocalStorage[i].quantity
-                        productQuantity.className = 'itemQuantity'
-                        productQuantity.setAttribute("type", "number")
-                        productQuantity.setAttribute("min", "1")
-                        productQuantity.setAttribute("max", "100")
-                        productQuantity.setAttribute("name", "itemQuantity")
-                    
-                    // create div for delete option 
-                    let cartItemContentSettingsDelete= document.createElement('div')
-                    cartItemContentSettings.appendChild(cartItemContentSettingsDelete)
-                    cartItemContentSettingsDelete.className = 'cart__item__content__settings__delete'
+                    //Quantity
+                    let productQuantity = document.createElement('input')
+                    cartItemContentSettingsQuantity.appendChild(productQuantity)
+                    productQuantity.value = productInLocalStorage[i].quantity
+                    productQuantity.className = 'itemQuantity'
+                    productQuantity.setAttribute("type", "number")
+                    productQuantity.setAttribute("min", "1")
+                    productQuantity.setAttribute("max", "100")
+                    productQuantity.setAttribute("name", "itemQuantity")
+                
+                // create div for delete option 
+                let cartItemContentSettingsDelete= document.createElement('div')
+                cartItemContentSettings.appendChild(cartItemContentSettingsDelete)
+                cartItemContentSettingsDelete.className = 'cart__item__content__settings__delete'
 
-                        // p for delete button
-                        let deleteButton = document.createElement('p')
-                        cartItemContentSettingsDelete.appendChild(deleteButton)
-                        deleteButton.className = 'deleteItem'
-                        deleteButton.innerHTML = 'Supprimer'
-                        let idToDelete = productInLocalStorage[i].id 
-                        let colorToDelete = productInLocalStorage[i].color
-                        deleteButton.addEventListener('click', (e) => {
+                    // p for delete button
+                    let deleteButton = document.createElement('p')
+                    cartItemContentSettingsDelete.appendChild(deleteButton)
+                    deleteButton.className = 'deleteItem'
+                    deleteButton.innerHTML = 'Supprimer'
+                    let idToDelete = productInLocalStorage[i].id 
+                    let colorToDelete = productInLocalStorage[i].color
+                    deleteButton.addEventListener('click', (e) => {
 
-                // filter local storage to delete the element and save the remaining items
-                productInLocalStorage = productInLocalStorage.filter( elt => elt.id !== idToDelete || elt.color !== colorToDelete);
-                localStorage.setItem('cart', JSON.stringify(productInLocalStorage));               
-                alert('Votre article a été supprimé.');
-                // reload the content
-                location.reload();
-                        })
-                priceAndQuantityCalculation()
+            // filter local storage to delete the element and save the remaining items
+            productInLocalStorage = productInLocalStorage.filter( elt => elt.id !== idToDelete || elt.color !== colorToDelete);
+            localStorage.setItem('cart', JSON.stringify(productInLocalStorage));               
+            alert('Votre article a été supprimé.');
+            // reload the content
+            location.reload();
+                    })
+            priceAndQuantityCalculation()
 }
 
 // -----------
 // Quantity Modification and Price/quantity calculation fuctions 
 //------------
 
+
+
     // Total price and quantity calculation
-    function priceAndQuantityCalculation() {
-        let totalPriceCalculation = parseInt(productInLocalStorage[i].price) * parseInt(productInLocalStorage[i].quantity);
-        totalPriceArray.push(totalPriceCalculation);
-        totalQuantityArray.push(parseInt(productInLocalStorage[i].quantity));
-        let totalPrice=0;
-    }
+     function priceAndQuantityCalculation() {
+         let totalPriceCalculation = parseInt(productInLocalStorage[i].price) * parseInt(productInLocalStorage[i].quantity);
+         totalPriceArray.push(totalPriceCalculation);
+         totalQuantityArray.push(parseInt(productInLocalStorage[i].quantity));
+
+         let totalPrice=0;
+     }
 
     // Total Price
-    function totalPriceCalculation() {
+    function totalPriceCalculation(cart) {
         let totalPrice=0
-        for (let i = 0; i < totalPriceArray.length; i++) {
-            totalPrice += totalPriceArray[i];
+        for (let i = 0; i < cart.length; i++) {
+            console.log(cart[i].quantity)
+            totalPrice += cart[i].quantity * cart[i].price; // NEED TO FIND THIS
         }
+        console.log(totalPrice)
         document.querySelector("#totalPrice").textContent = totalPrice;
     }
-    totalPriceCalculation()
+    totalPriceCalculation(productInLocalStorage)
+
+
 
     // Total Quantity
-    function totalQuantityCalculation(params) {
+    function totalQuantityCalculation() {
         let totalQuantity=0
         for (let i = 0; i < totalQuantityArray.length; i++) {
             totalQuantity += totalQuantityArray[i];
         }
         document.querySelector("#totalQuantity").textContent = totalQuantity;
+        console.log(totalQuantity)
     }
     totalQuantityCalculation()
 
@@ -182,7 +193,7 @@ let totalQuantityArray = [];
                 
                 let QuantityRequested = itemQuantity[k].valueAsNumber;
                 
-                const resultFind = productInLocalStorage[k]//productInLocalStorage.find((el) => el.id === productInLocalStorage.id & el.color === productInLocalStorage.color);
+                const resultFind = productInLocalStorage[k]
                 
                 resultFind.quantity = QuantityRequested;
                 productInLocalStorage[k].quantity = resultFind.quantity;
@@ -332,7 +343,7 @@ let totalQuantityArray = [];
         //Objet with contact infos and products id
         const orderData = {
             contact,
-            products  //: productInLocalStorage
+            products  
         }
 
         //Store ordered productId in local storage
