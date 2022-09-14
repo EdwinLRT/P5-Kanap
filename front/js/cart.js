@@ -8,7 +8,6 @@ fetch("http://localhost:3000/api/products")
 
 let productInLocalStorage = JSON.parse(localStorage.getItem("cart"));
 
-
 // -----------
 // Cart
 //------------
@@ -27,8 +26,6 @@ function isCartEmpty() {
     }
   }
   isCartEmpty()
-
-
 
 
 
@@ -83,7 +80,7 @@ let totalQuantityArray = [];
                     //Price
                     let productPrice = document.createElement('p')
                     cartItemContentDescription.appendChild(productPrice)
-                    productPrice.innerHTML = productInLocalStorage[i].price + "€"
+                    productPrice.innerHTML = product.price + "€"
 
 
         // --
@@ -175,18 +172,17 @@ let totalQuantityArray = [];
 
     // Quantity modifications 
 
-    function modifyQtt() {
+    function modifyQuantity() {
         let itemQuantity = document.querySelectorAll(".itemQuantity");
 
         for (let k= 0; k < itemQuantity.length; k++){
             itemQuantity[k].addEventListener("change" , (event) => {
                 event.preventDefault();
-
                 //Select id and color 
-                let currentQuantity = productInLocalStorage[k].quantity;
-                let QuantityRequested = quantityToModify[k].valueAsNumber;
                 
-                const resultFind = productInLocalStorage.find((el) => el.QuantityRequested !== currentQuantity);
+                let QuantityRequested = itemQuantity[k].valueAsNumber;
+                
+                const resultFind = productInLocalStorage[k]//productInLocalStorage.find((el) => el.id === productInLocalStorage.id & el.color === productInLocalStorage.color);
                 
                 resultFind.quantity = QuantityRequested;
                 productInLocalStorage[k].quantity = resultFind.quantity;
@@ -197,19 +193,7 @@ let totalQuantityArray = [];
             })
         }
     }
-    modifyQtt();
-
-//     //  mise à jour dans le cart [] de la quantité de l'Item
-// function updateItemsQuantity(newQuantity, color, _id) {
-//     const itemToUpdate = cart.find(
-//       (item) => (item.id === _id) & (item.color === color)
-//     );
-//     itemToUpdate.quantity = Number(newQuantity);
-//     calcTotalArticle();
-//     calcTotalPrice();
-//     updateDataToLocalStorage(itemToUpdate);
-//     displayH1AndTitle();
-//   }
+    modifyQuantity();
 
 // -----------
 // Form Verification 
@@ -304,7 +288,7 @@ let totalQuantityArray = [];
     //-----
     function formVerification() {
         if (
-            !isCartEmpty() ||
+            isCartEmpty() ||
             !firstNameVerif(form.firstName) ||
             !lastNameVerif(form.lastName) ||
             !addressVerif(form.address) || 
