@@ -139,50 +139,50 @@ function displayCartItems() {
             // reload the content
             location.reload();
         })
-        priceAndQuantityCalculation()
+        // priceAndQuantityCalculation()
     }    
 }
+displayCartItems()
 
 
 // -----------
 // Quantity Modification and Price/quantity calculation fuctions 
 //------------
 
-
-
-// Total price and quantity calculation
-function priceAndQuantityCalculation() {
-    let totalPriceCalculation = parseInt(myCart[i].price) * parseInt(myCart[i].quantity);
-    totalPriceArray.push(totalPriceCalculation);
-    totalQuantityArray.push(parseInt(myCart[i].quantity));
-
-    let totalPrice=0;
-}
-
-// Total Price
-function totalPriceCalculation(cart) {
-    let totalPrice=0
-    console.log(cart)
-    for (let i = 0; i < cart.length; i++) {
-        totalPrice += cart[i].quantity * cart[i].price; // NEED TO FIND THIS
+function totalPriceCalculation() {
+    let totalPriceArray = []
+    for (let t = 0; t < myCart.length; t += 1 ) {
+        fetch("http://localhost:3000/api/products/" + myCart[t].id)
+        .then(response => response.json())
+        .then(async function (resultAPI) {
+            productUnit = await resultAPI;
+            let totalPricePerLine = ((productUnit.price)*(myCart[t].quantity))
+            totalPriceArray.push(totalPricePerLine)
+            //reducer to calculate sum of totalPrice array 
+            const reducer = (accumulator, curr) => accumulator + curr;
+            let totalPrice = totalPriceArray.reduce(reducer); 
+            let totalPriceDisplay = document.querySelector("#totalPrice")
+            totalPriceDisplay.textContent = totalPrice;
+        })
+        .catch(error => alert("Erreur : " + error));
     }
-    document.querySelector("#totalPrice").textContent = totalPrice;
 }
-totalPriceCalculation(myCart)
+totalPriceCalculation()
 
-
-
-// Total Quantity
 function totalQuantityCalculation() {
-    let totalQuantity=0
-    for (let i = 0; i < totalQuantityArray.length; i++) {
-        totalQuantity += totalQuantityArray[i];
+    let totalQuantityArray=[]
+    for (let i = 0; i < myCart.length; i += 1) {
+        let xxx = parseInt(myCart[i].quantity)
+        totalQuantityArray.push(xxx)
+        console.log(totalQuantityArray)
+        const reducer = (accumulator, curr) => accumulator + curr;
+        let totalQuantity = totalQuantityArray.reduce(reducer); 
+        let totalQuantityDisplay = document.querySelector("#totalQuantity")
+        totalQuantityDisplay.textContent = totalQuantity
     }
-    document.querySelector("#totalQuantity").textContent = totalQuantity;
+    
 }
 totalQuantityCalculation()
-
-
 
 // Quantity modifications 
 
