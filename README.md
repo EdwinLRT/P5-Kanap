@@ -1,4 +1,4 @@
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/oqluixeJlkc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<img src = https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo.png>
 
 # Kanap #
 
@@ -15,3 +15,6 @@ can then run the server with `node server`.
 The server should run on `localhost` with default port `3000`. If the
 server runs on another port for any reason, this is printed to the
 console when the server starts, e.g. `Listening on port 3001`.
+
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/oqluixeJlkc/0.jpg)](https://www.youtube.com/watch?v=oqluixeJlkc)
