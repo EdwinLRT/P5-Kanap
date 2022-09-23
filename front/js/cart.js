@@ -1,23 +1,8 @@
-//Call API to get product list
-function getAllProducts() {
-    fetch("http://localhost:3000/api/products")
-    // if result is ok - turn into Json
-    .then(function(res){
-        if (res.ok){
-            return res.json();
-    }})
-}
-getAllProducts()
-
 let myCart = JSON.parse(localStorage.getItem("cart"));
 
 // -----------
 // Cart
 //------------
-//creating array for cart totals
-let totalPriceArray = [];
-let totalQuantityArray = [];
-
 
 // check if cart is empty
 function isCartEmpty() {
@@ -172,8 +157,8 @@ totalPriceCalculation()
 function totalQuantityCalculation() {
     let totalQuantityArray=[]
     for (let i = 0; i < myCart.length; i += 1) {
-        let xxx = parseInt(myCart[i].quantity)
-        totalQuantityArray.push(xxx)
+        let quantityToInteger = parseInt(myCart[i].quantity)
+        totalQuantityArray.push(quantityToInteger)
         console.log(totalQuantityArray)
         const reducer = (accumulator, curr) => accumulator + curr;
         let totalQuantity = totalQuantityArray.reduce(reducer); 
@@ -348,9 +333,6 @@ function orderValidation() {
         contact,
         products  
     }
-
-    //Store ordered productId in local storage
-    localStorage.setItem('order', JSON.stringify(orderData))
     
     //Send order and contact to API
     const sendToApi = {
@@ -364,7 +346,6 @@ function orderValidation() {
     fetch("http://localhost:3000/api/products/order", sendToApi)
     .then(response => response.json())
     .then(data => {
-    localStorage.setItem('orderId', data.orderId);
     document.location.href = 'confirmation.html?id='+ data.orderId;
     });
 
