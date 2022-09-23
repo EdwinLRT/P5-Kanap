@@ -1,4 +1,4 @@
-<img src = https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo.png style="height: 200px width: 200px">
+<img src = https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo-small.png">
 
 # Kanap #
 
