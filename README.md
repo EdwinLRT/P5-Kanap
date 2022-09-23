@@ -1,4 +1,4 @@
-<img src = https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo.png>
+<img src = https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo.png style="height: 200px width: 200px">
 
 # Kanap #
 
@@ -16,5 +16,7 @@ The server should run on `localhost` with default port `3000`. If the
 server runs on another port for any reason, this is printed to the
 console when the server starts, e.g. `Listening on port 3001`.
 
+
+### Video demonstrating working website ###
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/oqluixeJlkc/0.jpg)](https://www.youtube.com/watch?v=oqluixeJlkc)
