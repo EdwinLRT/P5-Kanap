@@ -45,7 +45,7 @@ function displayProductDatas(product) {
     //Save product in LocalStorage
     let addToCartButton = document.querySelector("#addToCart");
     addToCartButton.addEventListener('click', (e) => {
-        if (document.querySelector("#quantity").value == 0 || document.querySelector("#colors").value == '' ) {
+        if (document.querySelector("#quantity").value == 0 || document.querySelector("#colors").value == '' || document.querySelector("#quantity").value > 100) {
             alert("La couleur et/ou la quantitée séléctionnée est incorrecte")
         }
         else {
