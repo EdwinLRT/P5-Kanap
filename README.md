@@ -1,4 +1,4 @@
-![alt text](http://url/to/img.png](https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo-small.png)
+<img src="https://github.com/EdwinLRT/P5-Kanap/blob/main/front/images/logo-small.png" alt="logo-kanap" title="Projet Kanap">
 
 # Kanap #
 
