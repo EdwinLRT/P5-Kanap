@@ -14,6 +14,7 @@ fetch(urlProduct)
 //Get product informations
 //------------------------------------------------------------------------
 
+
 function displayProductDatas(product) {
     //Changer parametre produit
     // Get product content via productId
